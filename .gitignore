@@ -1,3 +1,22 @@
+# Customerization
+
+## Common
+.idea
+.virtual_documents
+kite_tutorial.ipynb
+.DS_store
+README.md.backup
+
+## Folders
+
+## Files
+
+### files by extension
+
+### files by name
+
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,22 @@
+# general
+pytest
+tqdm
+
+# Jupyter
+ipykernel
+ipywidgets
+
+# data
+pandas
+numpy
+
+# ml
+tensorflow
+
+# cv
+opencv-contrib-python
+imutils
+
+# visualization
+matplotlib
+plotly

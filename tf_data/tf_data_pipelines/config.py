@@ -16,15 +16,13 @@ TEST_PATH = os.path.sep.join([BASE_PATH, "testing"])
 # define the amount of data that will be used training
 TRAIN_SPLIT = 0.8
 
-# the amount of validation data will be a percentage of the
-# *training* data
+# the amount of validation data will be a percentage of the *training* data
 VAL_SPLIT = 0.1
 
 # define input image spatial dimensions
 IMAGE_SIZE = (48, 48)
 
-# initialize our number of epochs, early stopping patience, initial
-# learning rate, and batch size
+# initialize our number of epochs, early stopping patience, initial learning rate, and batch size
 NUM_EPOCHS = 40
 EARLY_STOPPING_PATIENCE = 5
 INIT_LR = 1e-2

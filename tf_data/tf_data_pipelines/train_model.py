@@ -1,9 +1,3 @@
-# set the matplotlib backend so figures can be saved in the background
-import matplotlib
-
-matplotlib.use("Agg")
-
-# import the necessary packages
 from cancernet import CancerNet
 import config
 from tensorflow.keras.callbacks import EarlyStopping
@@ -16,14 +10,23 @@ import tensorflow as tf
 import argparse
 import os
 
+# set the matplotlib backend so figures can be saved in the background
+import matplotlib
+
+matplotlib.use("Agg")
+
 
 def load_images(imagePath):
-    # read the image from disk, decode it, convert the data type to
-    # floating point, and resize it
+    """
+    read the image from disk, decode it, convert the data type to floating point, and resize it
+    :param imagePath: str
+    :return:
+    """
     image = tf.io.read_file(imagePath)
     image = tf.image.decode_png(image, channels=3)
     image = tf.image.convert_image_dtype(image, dtype=tf.float32)
     image = tf.image.resize(image, config.IMAGE_SIZE)
+
     # parse the class label from the file path
     label = tf.strings.split(imagePath, os.path.sep)[-2]
     label = tf.strings.to_number(label, tf.int32)
@@ -37,6 +40,7 @@ def augment(image, label):
     # perform random horizontal and vertical flips
     image = tf.image.random_flip_up_down(image)
     image = tf.image.random_flip_left_right(image)
+
     # return the image and the label
     return image, label
 
@@ -52,8 +56,10 @@ trainPaths = list(paths.list_images(config.TRAIN_PATH))
 valPaths = list(paths.list_images(config.VAL_PATH))
 testPaths = list(paths.list_images(config.TEST_PATH))
 
-# calculate the total number of training images in each class and
-# initialize a dictionary to store the class weights
+'''
+calculate the total number of training images in each class and
+initialize a dictionary to store the class weights
+'''
 trainLabels = [int(p.split(os.path.sep)[-2]) for p in trainPaths]
 trainLabels = to_categorical(trainLabels)
 classTotals = trainLabels.sum(axis=0)
@@ -92,6 +98,8 @@ testDS = (testDS
           .prefetch(AUTOTUNE)
           )
 
+tf.data.Dataset.from_generator
+
 # initialize our CancerNet model and compile it
 model = CancerNet.build(width=48, height=48, depth=3,
                         classes=1)
@@ -101,8 +109,7 @@ opt = adagrad_v2.Adagrad(lr=config.INIT_LR,
 model.compile(loss="binary_crossentropy", optimizer=opt,
               metrics=["accuracy"])
 
-# initialize an early stopping callback to prevent the model from
-# overfitting
+# initialize an early stopping callback to prevent the model from over-fitting
 es = EarlyStopping(
     monitor="val_loss",
     patience=config.EARLY_STOPPING_PATIENCE,

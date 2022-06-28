@@ -98,8 +98,6 @@ testDS = (testDS
           .prefetch(AUTOTUNE)
           )
 
-tf.data.Dataset.from_generator
-
 # initialize our CancerNet model and compile it
 model = CancerNet.build(width=48, height=48, depth=3,
                         classes=1)
